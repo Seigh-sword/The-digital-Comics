@@ -7,7 +7,7 @@ This is the official space to upload your digital comic creations, panel frames,
 
 ---
 
-## 🚫 Forbidden Stuff (No-No Zone)
+## 🚫 Rules 
 
 - ❌ **No Inappropriate Content**
   - No NSFW, violent, hateful, or offensive comics
