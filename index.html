@@ -1,29 +1,76 @@
-<!-- Just replace your <script> part with this updated one -->
-<script>
-  function login() {
-    const user = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
-    const msg = document.getElementById("message");
-
-    if (user === "Seigh_sword" && pass === "7085") {
-      msg.innerHTML = `
-        🎉 Welcome back, Comic Boss <b>${user}</b>!<br>
-        <button onclick="goToPreview()">Enter Admin Preview</button>
-      `;
-      document.body.style.backgroundColor = "#e1bee7";
-    } else if (user && pass) {
-      msg.innerHTML = `
-        👋 Welcome, <b>${user}</b>!<br>
-        <button onclick="goToPreview()">Continue to Comic Viewer</button>
-      `;
-      document.body.style.backgroundColor = "#e8f5e9";
-    } else {
-      msg.innerHTML = "❌ Username or password missing!";
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login - The Digital Comics</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      padding-top: 100px;
     }
-  }
 
-  function goToPreview() {
-    // In future, we can add permission logic
-    window.location.href = "reader.html"; // <-- create this page later
-  }
-</script>
+    h1 {
+      color: #333;
+    }
+
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 250px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 25px;
+      background-color: #5D1049;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #8E24AA;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔐 Login to The Digital Comics</h1>
+
+  <input type="text" id="username" placeholder="Enter your username"><br>
+  <input type="password" id="password" placeholder="Enter your password"><br>
+  <button onclick="login()">Login</button>
+
+  <p class="error" id="error-msg"></p>
+
+  <script>
+    const users = {
+      "Seigh_sword": "7085",
+      "guest": "1234"
+    };
+
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const error = document.getElementById("error-msg");
+
+      if (users[user] === pass) {
+        error.textContent = "";
+        alert("✅ Login successful!");
+        window.location.href = "reader.html"; // Redirect to comic reader
+      } else {
+        error.textContent = "❌ Invalid username or password";
+      }
+    }
+  </script>
+
+</body>
+</html>
