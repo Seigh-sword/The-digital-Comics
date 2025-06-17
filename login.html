@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Login - The Digital Comics</title>
   <style>
     body {
@@ -58,14 +59,14 @@
     };
 
     function login() {
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
       const error = document.getElementById("error-msg");
 
       if (users[user] === pass) {
         error.textContent = "";
         alert("✅ Login successful!");
-        window.location.href = "reader.html"; // Redirect to comic reader
+        window.location.href = "reader.html"; // Redirect
       } else {
         error.textContent = "❌ Invalid username or password";
       }
