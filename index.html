@@ -1,96 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>The Digital Comics - Login</title>
-  <style>
-    body {
-      font-family: 'Comic Sans MS', cursive;
-      background-color: #f9f9ff;
-      text-align: center;
-      margin: 0;
-      padding: 0;
+<!-- Just replace your <script> part with this updated one -->
+<script>
+  function login() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+    const msg = document.getElementById("message");
+
+    if (user === "Seigh_sword" && pass === "7085") {
+      msg.innerHTML = `
+        🎉 Welcome back, Comic Boss <b>${user}</b>!<br>
+        <button onclick="goToPreview()">Enter Admin Preview</button>
+      `;
+      document.body.style.backgroundColor = "#e1bee7";
+    } else if (user && pass) {
+      msg.innerHTML = `
+        👋 Welcome, <b>${user}</b>!<br>
+        <button onclick="goToPreview()">Continue to Comic Viewer</button>
+      `;
+      document.body.style.backgroundColor = "#e8f5e9";
+    } else {
+      msg.innerHTML = "❌ Username or password missing!";
     }
+  }
 
-    .login-container {
-      margin-top: 80px;
-      background: #fff;
-      padding: 30px;
-      display: inline-block;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    }
-
-    input {
-      display: block;
-      margin: 10px auto;
-      padding: 10px;
-      width: 220px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-    }
-
-    button {
-      padding: 10px 30px;
-      background-color: #6a1b9a;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background-color: #8e24aa;
-    }
-
-    .pixel-cat {
-      width: 100px;
-      margin-top: 30px;
-      border-radius: 10px;
-    }
-
-    .msg {
-      margin-top: 20px;
-      color: #444;
-      font-size: 15px;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>🐱 Welcome to The Digital Comics Library</h1>
-
-  <div class="login-container">
-    <h2>Login to Enter</h2>
-    <input type="text" id="username" placeholder="Your Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <div class="msg" id="message">💬 Pixel says: Enter your name to begin your journey!</div>
-  </div>
-
-  <img class="pixel-cat" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Domestic_Cat_Face.jpg/320px-Domestic_Cat_Face.jpg" alt="Pixel the Cat">
-
-  <script>
-    function login() {
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-      const msg = document.getElementById("message");
-
-      if (user === "Seigh_sword" && pass === "7085") {
-        msg.innerHTML = "🎉 Pixel says: Welcome back, Comic Boss Seigh_sword!";
-        document.body.style.backgroundColor = "#e1bee7";
-        setTimeout(() => {
-          alert("Redirecting you to the admin area...");
-          // Later this can redirect to another page
-        }, 1000);
-      } else if (user && pass) {
-        msg.innerHTML = `👋 Pixel says: Welcome, ${user}! Prepare your comics.`;
-        document.body.style.backgroundColor = "#e8f5e9";
-      } else {
-        msg.innerHTML = "🙀 Pixel says: Username or password missing, chetta!";
-      }
-    }
-  </script>
-
-</body>
-</html>
+  function goToPreview() {
+    // In future, we can add permission logic
+    window.location.href = "reader.html"; // <-- create this page later
+  }
+</script>
