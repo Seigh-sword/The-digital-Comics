@@ -1,34 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Login – The Digital Comics</title>
+  <title>The Digital Comics - Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; text-align: center; padding-top: 100px; }
-    input { padding: 10px; margin: 10px; width: 250px; font-size: 16px; }
-    button { padding: 10px 25px; background: #5D1049; color: white; border: none; border-radius: 8px; cursor: pointer; }
-    button:hover { background-color: #8E24AA; }
-    .error { color: red; font-weight: bold; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      padding: 40px;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+    input {
+      padding: 10px;
+      width: 250px;
+      margin: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4b72ff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .status {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+    }
   </style>
 </head>
 <body>
-  <h1>🔐 Login to The Digital Comics</h1>
-  <input type="text" id="username" placeholder="Enter your username"><br>
-  <input type="password" id="password" placeholder="Enter your password"><br>
-  <button onclick="login()">Login</button>
-  <p class="error" id="error-msg"></p>
+  <div class="container">
+    <h2>🚀 The Digital Comics Login</h2>
+    <p>Enter your email to receive a 6-digit verification code</p>
+    <input type="email" id="user_email" placeholder="Enter your email">
+    <br>
+    <button onclick="sendVerification()">Send Code</button>
+    <div class="status" id="status"></div>
+
+    <h3>Enter Code:</h3>
+    <input type="text" id="code_input" placeholder="6-digit code">
+    <br>
+    <button onclick="verifyCode()">Verify</button>
+    <div class="status" id="verify_status"></div>
+  </div>
+
   <script>
-    const users = { "Seigh_sword": "7085", "guest": "1234" };
-    function login() {
-      const user = document.getElementById("username").value.trim();
-      const pass = document.getElementById("password").value.trim();
-      const err = document.getElementById("error-msg");
-      if (users[user] === pass) {
-        err.textContent = "";
-        alert("✅ Login successful!");
-        window.location.href = "reader.html";
+    emailjs.init("QpJwtFmsgU4hEtLSV"); // your public key
+
+    function generateCode() {
+      return Math.floor(100000 + Math.random() * 900000);
+    }
+
+    function sendVerification() {
+      const email = document.getElementById("user_email").value;
+      const code = generateCode();
+
+      localStorage.setItem("comic_code", code);
+      localStorage.setItem("comic_email", email);
+
+      emailjs.send("service_k8r1hew", "template_06ozfpq", {
+        code: code,
+        email: email,
+        to_email: email,
+        time: new Date().toLocaleString(),
+        location: "ComicVerse HQ"
+      }).then(() => {
+        document.getElementById("status").innerText = "📫 Code sent to " + email;
+      }, (error) => {
+        document.getElementById("status").innerText = "❌ Error: " + error.text;
+      });
+    }
+
+    function verifyCode() {
+      const input = document.getElementById("code_input").value;
+      const real = localStorage.getItem("comic_code");
+
+      if (input === real) {
+        document.getElementById("verify_status").innerText = "✅ Verified! You're ready to post comics!";
+        // redirect or show post comic button
       } else {
-        err.textContent = "❌ Invalid username or password";
+        document.getElementById("verify_status").innerText = "❌ Wrong code. Check your email.";
       }
     }
   </script>
