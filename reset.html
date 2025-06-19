@@ -1,1 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Reset Password - The Digital Comics</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      background: #1e1e2f;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h2 {
+      color: #00ffe5;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background: #2a2a3d;
+      padding: 30px;
+      border-radius: 10px;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 15px #00ffe5;
+    }
+
+    input {
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+    }
+
+    button {
+      padding: 10px;
+      background: #00ffe5;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #00bfae;
+    }
+
+    .msg {
+      margin-top: 10px;
+      text-align: center;
+      color: lightgreen;
+    }
+
+    .error {
+      margin-top: 10px;
+      text-align: center;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Reset Your Password</h2>
+
+  <form id="resetForm">
+    <input type="email" id="email" placeholder="Your Email" required />
+    <input type="text" id="resetCode" placeholder="Reset Code" required />
+    <input type="password" id="newPassword" placeholder="New Password" required />
+    <button type="submit">Reset Password</button>
+    <div class="msg" id="successMsg"></div>
+    <div class="error" id="errorMsg"></div>
+  </form>
+
+  <script>
+    const form = document.getElementById("resetForm");
+    const successMsg = document.getElementById("successMsg");
+    const errorMsg = document.getElementById("errorMsg");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const enteredCode = document.getElementById("resetCode").value;
+      const newPassword = document.getElementById("newPassword").value;
+
+      const storedCode = localStorage.getItem("resetCode_" + email);
+      const storedUser = localStorage.getItem(email);
+
+      if (!storedUser) {
+        errorMsg.textContent = "❌ No user with this email.";
+        return;
+      }
+
+      if (enteredCode !== storedCode) {
+        errorMsg.textContent = "❌ Incorrect reset code.";
+        return;
+      }
+
+      if (newPassword.length < 6 || !/\d/.test(newPassword) || !/[a-zA-Z]/.test(newPassword)) {
+        errorMsg.textContent = "❌ Password must be 6+ characters, include letters and numbers.";
+        return;
+      }
+
+      const user = JSON.parse(storedUser);
+      user.password = newPassword;
+      localStorage.setItem(email, JSON.stringify(user));
+      localStorage.removeItem("resetCode_" + email);
+
+      successMsg.textContent = "✅ Password has been reset successfully!";
+      errorMsg.textContent = "";
+    });
+  </script>
+
+</body>
+</html>
 
