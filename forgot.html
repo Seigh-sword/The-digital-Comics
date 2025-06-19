@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Forgot Password - The Digital Comics</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      background: #1e1e2f;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h2 {
+      color: #00ffe5;
+      margin-bottom: 20px;
+    }
+    form {
+      background: #2a2a3d;
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+    }
+    input {
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background: #00ffe5;
+      color: #000;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #00bfae;
+    }
+    .msg {
+      margin-top: 10px;
+      text-align: center;
+      color: lightgreen;
+    }
+    .error {
+      margin-top: 10px;
+      text-align: center;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Forgot Password</h2>
+  <form id="forgotForm">
+    <input type="email" id="email" placeholder="Your Email" required />
+    <input type="text" id="username" placeholder="Your Username (Optional)" />
+    <button type="submit">Send Reset Link</button>
+  </form>
+
+  <div class="msg" id="successMsg"></div>
+  <div class="error" id="errorMsg"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+  <script>
+    emailjs.init("QpJwtFmsgU4hEtLSV"); // Your PUBLIC key here
+
+    const form = document.getElementById("forgotForm");
+    const successMsg = document.getElementById("successMsg");
+    const errorMsg = document.getElementById("errorMsg");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      let username = document.getElementById("username").value;
+
+      const userData = JSON.parse(localStorage.getItem(email));
+
+      if (!userData) {
+        errorMsg.textContent = "❌ Email not found!";
+        successMsg.textContent = "";
+        return;
+      }
+
+      if (!username) {
+        username = userData.username; // fallback to saved one
+      }
+
+      // You can add a random reset code or link here too
+      const resetCode = Math.floor(100000 + Math.random() * 900000);
+
+      emailjs.send("service_k8r1hew", "template_06ozfpq", {
+        to_email: email,
+        email: email,
+        username: username,
+        code: resetCode,
+        time: new Date().toLocaleTimeString(),
+        location: "Comic Reset Portal" // you can change this
+      }).then(() => {
+        successMsg.textContent = "✅ Reset link sent to " + email;
+        errorMsg.textContent = "";
+      }).catch((error) => {
+        errorMsg.textContent = "❌ Failed to send email.";
+        successMsg.textContent = "";
+        console.error("EmailJS Error", error);
+      });
+    });
+  </script>
+
+</body>
+</html>
 
