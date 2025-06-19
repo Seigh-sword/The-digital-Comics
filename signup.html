@@ -1,1 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up - The Digital Comics</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      background: #1e1e2f;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #00ffe5;
+    }
+    form {
+      background: #2a2a3d;
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+    }
+    input {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    button {
+      padding: 10px;
+      background: #00ffe5;
+      color: #000;
+      border: none;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #00bfae;
+    }
+    .error {
+      color: red;
+    }
+    a {
+      color: #00ffe5;
+      margin-top: 10px;
+      text-align: center;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Create Account</h2>
+  <form id="signupForm" autocomplete="on">
+    <input type="text" name="username" placeholder="Username" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+    <button type="submit">Sign Up</button>
+    <div class="error" id="errorMsg"></div>
+  </form>
+  <a href="login.html">Already have an account? Log in</a>
+
+  <script>
+    const form = document.getElementById("signupForm");
+    const errorMsg = document.getElementById("errorMsg");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const username = form.username.value;
+      const email = form.email.value;
+      const password = form.password.value;
+      const confirm = form.confirmPassword.value;
+
+      if (password !== confirm) {
+        errorMsg.textContent = "❌ Passwords do not match!";
+        return;
+      }
+
+      // Save user to localStorage
+      localStorage.setItem(email, JSON.stringify({ username, password }));
+      alert("✅ Account created! You can now log in.");
+      window.location.href = "login.html";
+    });
+  </script>
+
+</body>
+</html>
 
