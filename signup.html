@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Sign Up - The Digital Comics</title>
   <meta charset="UTF-8" />
@@ -15,18 +15,22 @@
       height: 100vh;
       margin: 0;
     }
+
     h2 {
-      margin-bottom: 20px;
       color: #00ffe5;
+      margin-bottom: 20px;
     }
+
     form {
       background: #2a2a3d;
       padding: 30px;
       border-radius: 10px;
-      width: 300px;
+      width: 320px;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 0 15px #00ffe5;
     }
+
     input {
       margin-bottom: 15px;
       padding: 10px;
@@ -34,41 +38,53 @@
       border-radius: 5px;
       font-size: 1em;
     }
+
     button {
       padding: 10px;
       background: #00ffe5;
       color: #000;
-      border: none;
       font-weight: bold;
+      border: none;
       border-radius: 5px;
       cursor: pointer;
     }
+
     button:hover {
       background: #00bfae;
     }
+
     .error {
       color: red;
+      margin-top: 10px;
+      text-align: center;
     }
+
     a {
       color: #00ffe5;
       margin-top: 10px;
       text-align: center;
-      display: block;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <h2>Create Account</h2>
-  <form id="signupForm" autocomplete="on">
-    <input type="text" name="username" placeholder="Username" required />
-    <input type="email" name="email" placeholder="Email" required />
-    <input type="password" name="password" placeholder="Password" required />
-    <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+  <h2>Create Your Account</h2>
+
+  <form id="signupForm">
+    <input type="text" id="username" placeholder="Username" />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
     <button type="submit">Sign Up</button>
     <div class="error" id="errorMsg"></div>
   </form>
-  <a href="login.html">Already have an account? Log in</a>
+
+  <a href="login.html">Already have an account? Login</a>
 
   <script>
     const form = document.getElementById("signupForm");
@@ -76,23 +92,32 @@
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      const username = form.username.value;
-      const email = form.email.value;
-      const password = form.password.value;
-      const confirm = form.confirmPassword.value;
+      const username = document.getElementById("username").value || "Comic Legend";
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
 
-      if (password !== confirm) {
-        errorMsg.textContent = "❌ Passwords do not match!";
+      if (password !== confirmPassword) {
+        errorMsg.textContent = "❌ Passwords do not match.";
         return;
       }
 
-      // Save user to localStorage
-      localStorage.setItem(email, JSON.stringify({ username, password }));
-      alert("✅ Account created! You can now log in.");
+      if (password.length < 6 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
+        errorMsg.textContent = "❌ Password must be 6+ characters, include letters and numbers.";
+        return;
+      }
+
+      const user = {
+        username: username,
+        email: email,
+        password: password,
+      };
+
+      localStorage.setItem(email, JSON.stringify(user));
+      alert("✅ Account created! You can log in now.");
       window.location.href = "login.html";
     });
   </script>
 
 </body>
 </html>
-
