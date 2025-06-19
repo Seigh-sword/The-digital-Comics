@@ -88,9 +88,11 @@
   <div class="msg" id="successMsg"></div>
   <div class="error" id="errorMsg"></div>
 
+  <!-- EmailJS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
   <script>
-    emailjs.init("QpJwtFmsgU4hEtLSV"); // Your EmailJS Public Key (safe to share)
+    // ✅ NEW PUBLIC KEY INIT
+    emailjs.init("OTzpeYr3hWqzR3VoG");
 
     const form = document.getElementById("forgotForm");
     const successMsg = document.getElementById("successMsg");
@@ -102,9 +104,8 @@
       let username = document.getElementById("username").value;
 
       const userData = JSON.parse(localStorage.getItem(email));
-
       if (!userData && !username) {
-        errorMsg.textContent = "❌ No user data found. Please enter username or register.";
+        errorMsg.textContent = "❌ No user data found. Please enter a username or register.";
         successMsg.textContent = "";
         return;
       }
@@ -123,11 +124,11 @@
         time: new Date().toLocaleTimeString(),
         location: "Comic Reset Portal"
       }).then(() => {
-        successMsg.textContent = "✅ Reset link sent to " + email;
+        successMsg.textContent = "✅ Reset code sent to " + email;
         errorMsg.textContent = "";
-        localStorage.setItem("resetCode_" + email, resetCode); // For later use
+        localStorage.setItem("resetCode_" + email, resetCode); // Store it for reset.html later
       }).catch((error) => {
-        errorMsg.textContent = "❌ Email failed to send.";
+        errorMsg.textContent = "❌ Failed to send email. Double-check EmailJS setup.";
         successMsg.textContent = "";
         console.error("EmailJS Error", error);
       });
