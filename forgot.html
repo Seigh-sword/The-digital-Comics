@@ -15,24 +15,29 @@
       height: 100vh;
       margin: 0;
     }
+
     h2 {
       color: #00ffe5;
       margin-bottom: 20px;
     }
+
     form {
       background: #2a2a3d;
       padding: 30px;
       border-radius: 10px;
-      width: 300px;
+      width: 320px;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 0 15px #00ffe5;
     }
+
     input {
       margin-bottom: 15px;
       padding: 10px;
       border-radius: 5px;
       border: none;
     }
+
     button {
       background: #00ffe5;
       color: #000;
@@ -42,28 +47,42 @@
       font-weight: bold;
       cursor: pointer;
     }
+
     button:hover {
       background: #00bfae;
     }
+
     .msg {
       margin-top: 10px;
       text-align: center;
       color: lightgreen;
     }
+
     .error {
       margin-top: 10px;
       text-align: center;
       color: red;
     }
+
+    .cat {
+      margin-bottom: 10px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 8px #00ffe5;
+    }
   </style>
 </head>
 <body>
 
-  <h2>Forgot Password</h2>
+  <img class="cat" src="https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg" alt="Pixel Cat" />
+  <h2>Forgot Your Password?</h2>
+
   <form id="forgotForm">
-    <input type="email" id="email" placeholder="Your Email" required />
-    <input type="text" id="username" placeholder="Your Username (Optional)" />
-    <button type="submit">Send Reset Link</button>
+    <input type="email" id="email" placeholder="Enter your email" required />
+    <input type="text" id="username" placeholder="Your username (optional)" />
+    <button type="submit">Send Reset Email</button>
   </form>
 
   <div class="msg" id="successMsg"></div>
@@ -71,7 +90,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
   <script>
-    emailjs.init("QpJwtFmsgU4hEtLSV"); // Your PUBLIC key here
+    emailjs.init("QpJwtFmsgU4hEtLSV"); // Your EmailJS Public Key (safe to share)
 
     const form = document.getElementById("forgotForm");
     const successMsg = document.getElementById("successMsg");
@@ -84,31 +103,31 @@
 
       const userData = JSON.parse(localStorage.getItem(email));
 
-      if (!userData) {
-        errorMsg.textContent = "❌ Email not found!";
+      if (!userData && !username) {
+        errorMsg.textContent = "❌ No user data found. Please enter username or register.";
         successMsg.textContent = "";
         return;
       }
 
-      if (!username) {
-        username = userData.username; // fallback to saved one
+      if (!username && userData) {
+        username = userData.username || "Unknown Hero";
       }
 
-      // You can add a random reset code or link here too
       const resetCode = Math.floor(100000 + Math.random() * 900000);
 
-      emailjs.send("service_k8r1hew", "template_06ozfpq", {
+      emailjs.send("service_astrimr", "template_xcbudu9", {
         to_email: email,
         email: email,
         username: username,
         code: resetCode,
         time: new Date().toLocaleTimeString(),
-        location: "Comic Reset Portal" // you can change this
+        location: "Comic Reset Portal"
       }).then(() => {
         successMsg.textContent = "✅ Reset link sent to " + email;
         errorMsg.textContent = "";
+        localStorage.setItem("resetCode_" + email, resetCode); // For later use
       }).catch((error) => {
-        errorMsg.textContent = "❌ Failed to send email.";
+        errorMsg.textContent = "❌ Email failed to send.";
         successMsg.textContent = "";
         console.error("EmailJS Error", error);
       });
@@ -117,4 +136,3 @@
 
 </body>
 </html>
-
