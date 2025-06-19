@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Login - The Digital Comics</title>
   <meta charset="UTF-8" />
@@ -15,59 +15,98 @@
       height: 100vh;
       margin: 0;
     }
+
     h2 {
-      margin-bottom: 20px;
       color: #00ffe5;
+      margin-bottom: 20px;
     }
+
     form {
       background: #2a2a3d;
       padding: 30px;
       border-radius: 10px;
-      width: 300px;
+      width: 320px;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 0 15px #00ffe5;
     }
+
     input {
       margin-bottom: 15px;
       padding: 10px;
-      border: none;
       border-radius: 5px;
+      border: none;
       font-size: 1em;
     }
+
     button {
       padding: 10px;
       background: #00ffe5;
       color: #000;
-      border: none;
       font-weight: bold;
+      border: none;
       border-radius: 5px;
       cursor: pointer;
     }
+
     button:hover {
       background: #00bfae;
     }
+
     .error {
       color: red;
+      margin-top: 10px;
+      text-align: center;
     }
+
     a {
       color: #00ffe5;
       margin-top: 10px;
       text-align: center;
-      display: block;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .social-login {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .social-login button {
+      background: #2e2e40;
+      color: white;
+    }
+
+    .social-login button:hover {
+      background: #3e3e60;
     }
   </style>
 </head>
 <body>
 
   <h2>Login</h2>
+
   <form id="loginForm" autocomplete="on">
     <input type="text" name="email" placeholder="Email" required />
     <input type="password" name="password" placeholder="Password" required />
     <button type="submit">Login</button>
     <div class="error" id="errorMsg"></div>
   </form>
+
   <a href="forgot.html">Forgot Password?</a>
   <a href="signup.html">New here? Sign Up</a>
+
+  <div class="social-login">
+    <button disabled>🔒 Sign in with Google (coming soon)</button>
+    <button disabled>🔒 Sign in with GitHub (coming soon)</button>
+    <button disabled>🔒 Sign in with Microsoft (coming soon)</button>
+  </div>
 
   <script>
     const form = document.getElementById("loginForm");
@@ -90,9 +129,8 @@
         return;
       }
 
-      alert("✅ Logged in successfully! Welcome, " + user.username);
-      // Redirect to dashboard or comic reader
-      // window.location.href = "dashboard.html";
+      alert("✅ Logged in successfully! Welcome, " + (user.username || "Comic Reader"));
+      // window.location.href = "dashboard.html"; // Optional redirect
     });
   </script>
 
