@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Comic Uploader - The Digital Comics</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      background: #1e1e2f;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    h2 {
+      color: #00ffe5;
+    }
+
+    form {
+      background: #2a2a3d;
+      padding: 30px;
+      border-radius: 15px;
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: 0 0 10px #00ffe5;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+    }
+
+    button {
+      padding: 10px;
+      background: #00ffe5;
+      border: none;
+      color: black;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .output {
+      margin-top: 20px;
+      text-align: center;
+      background: #333;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1em;
+      color: #00ffe5;
+      word-break: break-all;
+    }
+
+    .copied {
+      color: lime;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Upload Your Comic</h2>
+  <form id="comicForm">
+    <input type="text" id="username" placeholder="Your Username" required />
+    <input type="text" id="title" placeholder="Comic Title" required />
+    <textarea id="description" rows="3" placeholder="Comic Description..." required></textarea>
+    <input type="file" id="thumbnail" accept="image/*" required />
+    <button type="submit">Generate Comic ID 🚀</button>
+  </form>
+
+  <div id="comicIdOutput" class="output" style="display:none;"></div>
+
+  <script>
+    function generateId() {
+      return Math.floor(10000 + Math.random() * 90000); // 5 digit ID
+    }
+
+    function slugify(text) {
+      return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+
+    const form = document.getElementById('comicForm');
+    const output = document.getElementById('comicIdOutput');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const username = form.username.value.trim();
+      const title = form.title.value.trim();
+      const slugTitle = slugify(title);
+      const id = generateId();
+
+      const comicCode = `[${username}-${slugTitle}=${id}-comic]`;
+
+      output.innerHTML = `
+        <strong>🎉 Your Comic ID:</strong><br>
+        <span id="comicCode">${comi
