@@ -54,7 +54,7 @@
       border-radius: 10px;
       font-size: 1em;
       color: #00ffe5;
-      word-break: break-all;
+      word-break: break-word;
     }
 
     .copied {
@@ -73,30 +73,53 @@
     <button type="submit">Generate Comic ID 🚀</button>
   </form>
 
-  <div id="comicIdOutput" class="output" style="display:none;"></div>
+  <div id="comicIdOutput" class="output" style="display:none;">
+    <strong>🎉 Your Comic ID:</strong><br>
+    <span id="comicCode">[wait-generating]</span><br><br>
+    <button onclick="copyId()">📋 Copy to Clipboard</button>
+    <div id="copiedMsg" style="margin-top:10px;"></div>
+  </div>
 
   <script>
     function generateId() {
-      return Math.floor(10000 + Math.random() * 90000); // 5 digit ID
+      return Math.floor(10000 + Math.random() * 90000); // 5 digit comic ID
     }
 
     function slugify(text) {
-      return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      return text.toLowerCase()
+                 .replace(/[^a-z0-9]+/g, '-') 
+                 .replace(/^-+|-+$/g, '');
     }
 
     const form = document.getElementById('comicForm');
     const output = document.getElementById('comicIdOutput');
+    const comicCode = document.getElementById('comicCode');
+    const copiedMsg = document.getElementById('copiedMsg');
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      const username = form.username.value.trim();
-      const title = form.title.value.trim();
+      const username = document.getElementById('username').value.trim();
+      const title = document.getElementById('title').value.trim();
       const slugTitle = slugify(title);
       const id = generateId();
 
-      const comicCode = `[${username}-${slugTitle}=${id}-comic]`;
+      const code = `[${username}-${slugTitle}=${id}-comic]`;
+      comicCode.textContent = code;
 
-      output.innerHTML = `
-        <strong>🎉 Your Comic ID:</strong><br>
-        <span id="comicCode">${comi
+      output.style.display = "block";
+      copiedMsg.innerHTML = ""; // Reset copy msg
+    });
+
+    function copyId() {
+      const text = comicCode.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        copiedMsg.innerHTML = "✅ Comic ID copied!";
+      }).catch(err => {
+        copiedMsg.innerHTML = "❌ Failed to copy!";
+      });
+    }
+  </script>
+
+</body>
+</html>
