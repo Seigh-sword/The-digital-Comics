@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload Your Comic - Digital Comics</title>
+  <style>
+    body {
+      background: #1e1e2f;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    h2 {
+      color: #00ffe5;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background: #2a2a3d;
+      padding: 30px;
+      border-radius: 15px;
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: 0 0 10px #00ffe5;
+    }
+
+    input, textarea, select {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    button {
+      padding: 12px;
+      background: #00ffe5;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .profile-preview {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .profile-preview img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #00ffe5;
+    }
+
+    .friends-select {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .friend-tag {
+      background-color: #444;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #00ffe5;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Upload Your Comic</h2>
+
+  <form>
+    <label>Comic Title</label>
+    <input type="text" placeholder="Amazing Duck Saga #1" required>
+
+    <label>Description</label>
+    <textarea rows="3" placeholder="Write something epic..." required></textarea>
+
+    <label>Upload Comic Files</label>
+    <input type="file" accept=".zip,.jpg,.png" multiple required>
+
+    <label>Thumbnail Image</label>
+    <input type="file" accept="image/*" required>
+
+    <div class="profile-preview">
+      <img src="https://avatars.githubusercontent.com/u/1?v=4" alt="Profile Picture">
+      <span>@Seigh_sword</span>
+    </div>
+
+    <label>Choose who can view</label>
+    <div class="friends-select">
+      <span class="friend-tag">@duckboy</span>
+      <span class="friend-tag">@breadkiller</span>
+      <span class="friend-tag">@quacklord</span>
+    </div>
+
+    <button type="submit">Upload Comic 🚀</button>
+  </form>
+
+</body>
+</html>
